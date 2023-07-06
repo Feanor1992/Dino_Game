@@ -250,6 +250,7 @@ class birds(pygame.sprite.Sprite):
 
 
 class ground():
+    """class for drawing and moving ground on the screen"""
     def __init__(self, speed : int = -5):
         self.image, self.rectangle = load_image('ground.png', -1, -1, -1)
         self.image_1, self.rectangle_1 = load_image('ground.png', -1, -1, -1)
@@ -275,6 +276,24 @@ class ground():
             self.rectangle_1.left = self.rectangle.right
 
 
+class clouds(pygame.sprite.Sprite):
+    def __init__(self, x : int, y : int):
+        pygame.sprite.Sprite.__init__(self, self.containers)
+        self.image, self.rectangle = load_image('cloud.png', int(90 * 30 / 42), 30, -1)
+        self.speed = 1
+        self.rectangle.left = x
+        self.rectangle.top = y
+        self.movement = [-1 * self.speed, 0]
+
+    # function for drawing clouds on the screen
+    def draw(self):
+        screen_layout_display.blit(self.image, self.rectangle)
+
+    # function for clouds moving
+    def update(self):
+        self.rectangle = self.rectangle.move(self.movement)
+        if self.rectangle.right < 0
+            self.kill()
 
 
 
