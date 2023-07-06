@@ -124,6 +124,7 @@ def extract_digits(num: int | float) -> list:
 
 class Dino:
     """Dino's init and actions in the screen window"""
+
     def __init__(self, sx: int = -1, sy: int = -1):
         self.imgs, self.rectangle = load_spriter_sheet('dino.png', 5, 1, sx, sy, -1)
         self.imgs_upd, self.rectangle_upd = load_spriter_sheet('dino_ducking.png', 2, 1, 59, sy, -1)
@@ -166,10 +167,10 @@ class Dino:
                 if self.counter % 20 == 19:
                     self.index = (self.index + 1) % 2
         elif self.duking:
-            if self.counter % 5 ==0:
+            if self.counter % 5 == 0:
                 self.index = (self.index + 1) % 2
         else:
-            if self.counter % 5 ==0:
+            if self.counter % 5 == 0:
                 self.index = (self.index + 1) % 2
 
         if self.dead:
@@ -185,7 +186,7 @@ class Dino:
         self.rectangle = self.rectangle.move(self.movement)
         self.check_bounds()
 
-        if not self.dead and self.counter % 7 ==6 and self.blinking == False:
+        if not self.dead and self.counter % 7 == 6 and self.blinking == False:
             self.score += 1
             if self.score % 100 == 0 and self.score != 0:
                 if pygame.mixer.get_init() != None:
@@ -195,7 +196,8 @@ class Dino:
 
 
 class Cactus(pygame.sprite.Sprite):
-    """class for drawing and moving cactus in the screen"""
+    """class for drawing and moving cactus on the screen"""
+
     def __init__(self, speed: int = 5, sx: int = -1, sy: int = -1):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.imgs, self.rectangle = load_spriter_sheet('cactus-small.png', 3, 1, sx, sy, -1)
@@ -214,6 +216,49 @@ class Cactus(pygame.sprite.Sprite):
 
         if self.rectangle.right < 0:
             self.kill()
+
+
+class birds(pygame.sprite.Sprite):
+    """class for drawing and moving birds on the screen"""
+
+    def __init__(self, speed: int = 5, sx: int = -1, sy: int = -1):
+        pygame.sprite.Sprite.__init__(self, self.containers)
+        self.imgs, self.rectangle = load_spriter_sheet('birds.png', 2, 1, sx, sy, -1)
+        self.birds_height = [height_screen * 0.82, height_screen * 0.75, height_screen * 0.6]
+        self.rectangle.centery = self.birds_height[random.randrange(0, 3)]
+        self.rectangle.left = width_screen + self.rectangle.width
+        self.image = self.imgs[0]
+        self.movement = [-1 * speed, 0]
+        self.index = 0
+        self.counter = 0
+
+    # function for birds drawing
+    def draw(self):
+        screen_layout_display.blit(self.image, self.rectangle)
+
+    # function for birds moving
+    def update(self):
+        if self.counter % 10 == 0:
+            self.index = (self.index + 1) % 2
+
+        self.image = self.imgs[self.index]
+        self.rectangle = self.rectangle.move(self.movement)
+        self.counter = self.counter + 1
+
+        if self.rectangle.right < 0:
+            self.kill()
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
