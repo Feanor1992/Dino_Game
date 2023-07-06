@@ -249,6 +249,32 @@ class birds(pygame.sprite.Sprite):
             self.kill()
 
 
+class ground():
+    def __init__(self, speed : int = -5):
+        self.image, self.rectangle = load_image('ground.png', -1, -1, -1)
+        self.image_1, self.rectangle_1 = load_image('ground.png', -1, -1, -1)
+        self.rectangle.bottom = height_screen
+        self.rectangle_1.bottom = height_screen
+        self.rectangle_1.left = self.rectangle.right
+        self.speed = speed
+
+    # function for drawing ground on the screen
+    def draw(self):
+        screen_layout_display.blit(self.image, self.rectangle)
+        screen_layout_display.blit(self.image_1, self.rectangle_1)
+
+    # function for grond moving
+    def update(self):
+        self.rectangle.left += self.speed
+        self.rectangle_1.left += self.speed
+
+        if self.rectangle < 0:
+            self.rectangle.left = self.rectangle_1.right
+
+        if self.rectangle_1 < 0:
+            self.rectangle_1.left = self.rectangle.right
+
+
 
 
 
