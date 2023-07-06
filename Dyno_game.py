@@ -292,8 +292,44 @@ class clouds(pygame.sprite.Sprite):
     # function for clouds moving
     def update(self):
         self.rectangle = self.rectangle.move(self.movement)
-        if self.rectangle.right < 0
+        if self.rectangle.right < 0:
             self.kill()
+
+
+class scoreboard():
+    """add scoreboard to the screen"""
+    def __init__(self, x : int = -1, y : int = -1):
+        self.score = 0
+        self.scoreboard_image, self.scoreboard_rectangle = load_spriter_sheet('numbers.png', 12, 1, 11, int(11 * 6 / 5), -1)
+        self.image = pygame.Surface((55, int(11 * 6 / 5)))
+        self.rectangle = self.image.get_rect()
+
+        if  x == -1:
+            self.rectangle.left = width_screen * 0.89
+        else:
+            self.rectangle.left = x
+
+        if y == -1:
+            self.rectangle.top = height_screen * 0.1
+        else:
+            self.rectangle.top = y
+
+    # function for drawing scoreboard on the screen
+    def draw(self):
+        screen_layout_display.blit(self.image, self.rectangle)
+
+    # function for update score in scoreboard
+    def update(self, score : int):
+        score_digits = extract_digits(score)
+        self.image.fill(bg_color)
+
+        for digit in score_digits:
+            self.image.blit(self.scoreboard_image[digit], self.scoreboard_rectangle)
+            self.scoreboard_rectangle.left += self.scoreboard_rectangle.width
+
+        self.scoreboard_rectangle.left = 0
+
+
 
 
 
